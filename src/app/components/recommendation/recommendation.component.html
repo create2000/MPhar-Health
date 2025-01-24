@@ -1,0 +1,11 @@
+<div class="recommendation-container">
+    <h2>Recommendations for Patient ID: {{ patientId }}</h2>
+    <ul>
+      <li *ngFor="let rec of recommendations">
+        <strong>{{ rec.title }}</strong>: {{ rec.description }}
+      </li>
+    </ul>
+  </div>
+
+  
+  

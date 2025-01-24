@@ -1,0 +1,26 @@
+<div class="patient-list-container">
+    <h2>Patients</h2>
+    <table mat-table [dataSource]="patients" class="mat-elevation-z8">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let patient">{{ patient.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="age">
+        <th mat-header-cell *matHeaderCellDef>Age</th>
+        <td mat-cell *matCellDef="let patient">{{ patient.age }}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="['name', 'age']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['name', 'age'];"></tr>
+    </table>
+  </div>
+
+  <div class="patient-list">
+    <h2>Patient List</h2>
+    <ul>
+      <li *ngFor="let patient of patients">
+        <strong>{{ patient.name }}</strong> (Age: {{ patient.age }}) - Condition: {{ patient.condition }}
+      </li>
+    </ul>
+  </div>
+  
+  
