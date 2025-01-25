@@ -1,21 +1,12 @@
-
-import { LoginComponent } from './app/components/Login/login.component';
-import { DashboardComponent } from './app/components/Dashboard/dashboard.component';
-
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
-import { provideRouter } from '@angular/router';
-import { provideClientHydration } from '@angular/platform-browser';
-import { Routes } from '@angular/router';
+import { environment } from './environments/environment';
 
-const routes: Routes = [
-  { path: 'login', component: LoginComponent }, // Login page
-  { path: 'dashboard', component: DashboardComponent }, // Dashboard page
-  { path: '**', redirectTo: '' }, // Wildcard route (redirects to home)
-];
+if (environment.production) {
+  enableProdMode();
+}
 
-export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideClientHydration(),
-  importProvidersFrom(AppModule)]
-};
-
+platformBrowserDynamic()
+  .bootstrapModule(AppModule)
+  .catch((err) => console.error(err));

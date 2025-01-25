@@ -1,0 +1,94 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #e3f2fd, #f1f8e9);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Recommendation Container */
+  .recommendation-container {
+    width: 90%;
+    max-width: 600px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+    padding: 20px 30px;
+    box-sizing: border-box;
+    animation: fadeIn 1.2s ease-in-out;
+  }
+
+  /* Heading */
+  .recommendation-container h2 {
+    font-size: 1.8rem;
+    color: #3f51b5;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  /* List Styling */
+  .recommendation-container ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .recommendation-container li {
+    background-color: #f5f5f5;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+
+  .recommendation-container li:hover {
+    transform: translateY(-5px);
+    background-color: #e8f5e9;
+  }
+
+  .recommendation-container strong {
+    font-size: 1.1rem;
+    color: #388e3c;
+  }
+
+  .recommendation-container li:hover strong {
+    color: #2e7d32;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 480px) {
+    .recommendation-container {
+      padding: 15px 20px;
+    }
+
+    .recommendation-container h2 {
+      font-size: 1.5rem;
+    }
+
+    .recommendation-container li {
+      padding: 10px;
+    }
+
+    .recommendation-container strong {
+      font-size: 1rem;
+    }
+  }
+
+  /* Animation */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }

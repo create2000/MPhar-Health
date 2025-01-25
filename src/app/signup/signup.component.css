@@ -1,21 +1,21 @@
-.login-container-2 {
+.signup-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(to right, #e3f2fd, #f1f8e9);
+    background: linear-gradient(to right, #e8f5e9, #fbe9e7);
   }
   
-  .login-container mat-card {
+  mat-card {
     padding: 30px;
-    width: 400px;
+    width: 450px;
     border-radius: 12px;
     box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
     animation: fadeIn 1.2s ease-in-out;
   }
   
-  .login-container h2 {
+  h2 {
     text-align: center;
     color: #3f51b5;
     margin-bottom: 20px;
@@ -31,34 +31,33 @@
     margin-top: 10px;
   }
   
-  .signup-redirect {
+  .login-redirect {
     margin-top: 20px;
     text-align: center;
   }
   
-  .signup-redirect p {
+  .login-redirect p {
     margin: 0;
     color: #757575;
     font-size: 0.9rem;
   }
   
-  .signup-redirect a {
+  .login-redirect a {
     display: inline-block;
     margin-top: 10px;
     text-decoration: none;
     color: #ffffff;
-    background-color: #ff4081;
+    background-color: #3f51b5;
     padding: 8px 16px;
     border-radius: 4px;
     font-weight: bold;
     transition: background-color 0.3s ease;
   }
   
-  .signup-redirect a:hover {
-    background-color: #f50057;
+  .login-redirect a:hover {
+    background-color: #303f9f;
   }
   
-  /* Animation */
   @keyframes fadeIn {
     0% {
       opacity: 0;

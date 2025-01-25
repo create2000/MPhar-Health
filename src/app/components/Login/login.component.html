@@ -1,4 +1,5 @@
-<div class="login-container">
+<div class="login-container-2">
+  <div class="login-container">
     <mat-card>
       <h2>Login</h2>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -12,6 +13,10 @@
         </mat-form-field>
         <button mat-raised-button color="primary" type="submit">Login</button>
       </form>
+      <div class="signup-redirect">
+        <p>Don't have an account?</p>
+        <a mat-raised-button color="accent" routerLink="/signup">Sign Up</a>
+      </div>
     </mat-card>
   </div>
-  
+</div>

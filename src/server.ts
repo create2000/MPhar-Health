@@ -1,66 +1,41 @@
-import {
-  AngularNodeAppEngine,
-  createNodeRequestHandler,
-  isMainModule,
-  writeResponseToNodeResponse,
-} from '@angular/ssr/node';
+import 'zone.js/node'; // Required for Angular Universal
+import { enableProdMode } from '@angular/core';
 import express from 'express';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'path';
+import { ngExpressEngine } from '@nguniversal/express-engine';
+import { AppServerModule } from './app.server.module';
+import { environment } from './environments/environment';
 
-const serverDistFolder = dirname(fileURLToPath(import.meta.url));
-const browserDistFolder = resolve(serverDistFolder, '../browser');
-
-const app = express();
-const angularApp = new AngularNodeAppEngine();
-
-/**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/**', (req, res) => {
- *   // Handle API request
- * });
- * ```
- */
-
-/**
- * Serve static files from /browser
- */
-app.use(
-  express.static(browserDistFolder, {
-    maxAge: '1y',
-    index: false,
-    redirect: false,
-  }),
-);
-
-/**
- * Handle all other requests by rendering the Angular application.
- */
-app.use('/**', (req, res, next) => {
-  angularApp
-    .handle(req)
-    .then((response) =>
-      response ? writeResponseToNodeResponse(response, res) : next(),
-    )
-    .catch(next);
-});
-
-/**
- * Start the server if this module is the main entry point.
- * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
- */
-if (isMainModule(import.meta.url)) {
-  const port = process.env['PORT'] || 4000;
-  app.listen(port, () => {
-    console.log(`Node Express server listening on http://localhost:${port}`);
-  });
+if (environment.production) {
+  enableProdMode();
 }
 
-/**
- * The request handler used by the Angular CLI (dev-server and during build).
- */
-export const reqHandler = createNodeRequestHandler(app);
+const app = express();
+const PORT = process.env['PORT'] || 4000;
+
+// Define the folder where static files will be served from
+const DIST_FOLDER = join(process.cwd(), 'dist/healthcare-app/browser');
+
+// Serve static files
+app.use(express.static(DIST_FOLDER));
+
+// Set up the Angular Universal engine
+app.engine(
+  'html',
+  ngExpressEngine({
+    bootstrap: AppServerModule,
+  }) as any
+);
+
+app.set('view engine', 'html');
+app.set('views', DIST_FOLDER);
+
+// Handle all routes with Angular Universal
+app.get('*', (req, res) => {
+  res.render('index.html', { req });
+});
+
+// Start the Express server
+app.listen(PORT, () => {
+  console.log(`Node server listening on http://localhost:${PORT}`);
+});

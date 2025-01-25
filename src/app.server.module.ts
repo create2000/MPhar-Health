@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ServerModule } from '@angular/platform-server';
 import { AppModule } from './app/app.module';
-import { AppComponent } from './app/app.config';
+import { AppComponent } from './app/app.component';
 
 @NgModule({
   imports: [
@@ -9,5 +9,6 @@ import { AppComponent } from './app/app.config';
     ServerModule,
   ],
   bootstrap: [AppComponent],
+
 })
 export class AppServerModule {}

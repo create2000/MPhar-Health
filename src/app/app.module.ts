@@ -6,12 +6,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.config';
+import { AppComponent } from './app.component';
 import { LoginComponent } from './components/Login/login.component';
 import { DashboardComponent } from './components/Dashboard/dashboard.component';
 import { PatientListComponent } from './components/patient-list/patient-list.component';
 import { RecommendationComponent } from './components/recommendation/recommendation.component';
-
+import { SignupComponent } from './signup/signup.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
@@ -23,6 +23,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
   declarations: [
     AppComponent,
     LoginComponent,
+    SignupComponent,
     DashboardComponent,
     PatientListComponent,
     RecommendationComponent
@@ -40,12 +41,12 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     MatInputModule,
     MatTableModule,
     MatToolbarModule,
-    RouterModule, 
+    AppRoutingModule,
+    RouterModule.forRoot([])
     
   ],
-  providers: [
-    provideAnimationsAsync()
-  ],
+  providers: [],
+  bootstrap: [AppComponent]
 
 })
 export class AppModule { }
