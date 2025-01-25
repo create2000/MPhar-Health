@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
-//import { AppComponent } from './app.component';
+import { AppComponent } from './app.config';
 import { LoginComponent } from './components/Login/login.component';
 import { DashboardComponent } from './components/Dashboard/dashboard.component';
 import { PatientListComponent } from './components/patient-list/patient-list.component';
@@ -20,7 +21,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 @NgModule({
   declarations: [
-    //AppComponent,
+    AppComponent,
     LoginComponent,
     DashboardComponent,
     PatientListComponent,
@@ -38,11 +39,13 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     MatCardModule,
     MatInputModule,
     MatTableModule,
-    MatToolbarModule
+    MatToolbarModule,
+    RouterModule, 
+    
   ],
   providers: [
     provideAnimationsAsync()
   ],
-  bootstrap: [AppComponent]
+
 })
 export class AppModule { }
