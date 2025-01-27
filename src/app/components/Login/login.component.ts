@@ -18,20 +18,21 @@ export class LoginComponent {
     private http: HttpClient
   ) {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],  // Change username to email
       password: ['', Validators.required]
     });
   }
 
   onSubmit() {
     if (this.loginForm.valid) {
+      // Send login request with email and password
       this.http.post('http://localhost:5000/api/auth/login', this.loginForm.value)
         .subscribe({
           next: (response: any) => {
-            localStorage.setItem('token', response.token);
-            this.router.navigate(['/dashboard']);
+            localStorage.setItem('token', response.token); // Store JWT token in localStorage
+            this.router.navigate(['/dashboard']); // Navigate to dashboard
           },
-          error: (err) => alert('Login failed! Please try again.')
+          error: (err) => alert('Login failed! Please try again.') // Handle error
         });
     }
   }

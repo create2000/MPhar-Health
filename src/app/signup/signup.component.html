@@ -24,6 +24,10 @@
         </mat-form-field>
         <button mat-raised-button color="primary" type="submit">Sign Up</button>
       </form>
+      <mat-error *ngIf="signupForm.hasError('mismatch')">
+        Passwords do not match.
+      </mat-error>
+      
       <div class="login-redirect">
         <p>Already have an account?</p>
         <a mat-raised-button color="accent" routerLink="/login">Login</a>
