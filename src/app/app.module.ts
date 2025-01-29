@@ -8,8 +8,9 @@ import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/Login/login.component';
-import { DashboardComponent } from './components/Dashboard/dashboard.component';
+import { HomeComponent } from './components/Home/home.component';
 import { PatientListComponent } from './components/patient-list/patient-list.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { RecommendationComponent } from './components/recommendation/recommendation.component';
 import { SignupComponent } from './signup/signup.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,6 +20,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthInterceptor } from './Interceptors/auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
@@ -26,9 +28,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     AppComponent,
     LoginComponent,
     SignupComponent,
-    DashboardComponent,
+    HomeComponent,
     PatientListComponent,
-    RecommendationComponent
+    RecommendationComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -44,6 +47,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     MatTableModule,
     MatToolbarModule,
     AppRoutingModule,
+    MatProgressSpinnerModule,
     RouterModule.forRoot([])
     
   ],

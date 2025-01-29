@@ -48,7 +48,7 @@ export class SignupComponent {
       }).subscribe({
         next: (response: any) => {
           alert('Signup successful!');
-          this.router.navigate(['/login']); // Redirect to login page
+          this.router.navigate(['/dashboard']); // Redirect to login page
         },
         error: (err) => {
           if (err.status === 409) {

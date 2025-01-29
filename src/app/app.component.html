@@ -1,2 +1,52 @@
-<h1>Welcome to the Healthcare App!</h1>
-<router-outlet></router-outlet>
+<nav class="navbar">
+    <div class="container">
+      <div class="logo">Healthcare App</div>
+      <!-- Hamburger Icon -->
+    
+      <!-- Navigation Links -->
+      <ul class="nav-links" [class.show]="menuOpen">
+        <li><a href="#">Home</a></li>
+        <li><a href="#patients">Patients</a></li>
+        <li><a href="#recommendations">Recommendations</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+
+        <li *ngIf="isLoggedIn$ | async">
+            <a routerLink="/dashboard">Dashboard</a>
+          </li>
+    </ul>
+
+    
+    <div *ngIf="!(isLoggedIn$ | async)">
+        <a class="login-btn" routerLink="/Login">Login</a>
+      </div>
+
+      <div *ngIf="isLoggedIn$ | async">
+        <button (click)="logout()">Logout</button>
+      </div>
+
+    <span class="hamburger" id="hamburger" aria-label="Toggle menu" (click)="toggleMenu()">☰</span>
+    </div>
+  </nav>
+  
+  <router-outlet></router-outlet>
+  
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Healthcare App. All Rights Reserved.</p>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+      <div class="social-icons">
+        <a href="#" class="social-icon"><img src="facebook-icon.png" alt="Facebook"></a>
+        <a href="#" class="social-icon"><img src="twitter-icon.png" alt="Twitter"></a>
+        <a href="#" class="social-icon"><img src="gmail-icon.png" alt="Gmail"></a>
+        <a href="#" class="social-icon"><img src="instagram-icon.png" alt="Instagram"></a>
+      </div>
+    </div>
+  </footer>
+
+ 
+  
+  

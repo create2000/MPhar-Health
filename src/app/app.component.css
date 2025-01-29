@@ -1,0 +1,144 @@
+
+/* Navbar */
+.navbar {
+    background-color: #1D4ED8;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+  }
+  
+  .logo {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .nav-links {
+    display: flex;
+    list-style-type: none;
+  }
+  
+  .nav-links li {
+    margin-right: 1.5rem;
+  }
+  
+  .nav-links li a {
+    color: white;
+    transition: color 0.3s;
+  }
+  
+  .nav-links li a:hover {
+    color: #E5E7EB;
+  }
+  
+  .login-btn {
+    background-color: white;
+    color: #1D4ED8;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .login-btn:hover {
+    background-color: #E5E7EB;
+  }
+  
+  .footer {
+    background-color: #1F2937;
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+  }
+  
+  .footer-links {
+    margin-top: 1rem;
+  }
+  
+  .footer-links a {
+    color: white;
+    margin-right: 1rem;
+    transition: color 0.3s;
+  }
+  
+  .footer-links a:hover {
+    color: #E5E7EB;
+  }
+  
+  .social-icons {
+    margin-top: 1.5rem;
+  }
+  
+  .social-icon {
+    display: inline-block;
+    margin: 0 0.5rem;
+  }
+  
+  .social-icon img {
+    width: 32px;
+    height: 32px;
+    transition: transform 0.3s;
+  }
+  
+  .social-icon:hover img {
+    transform: scale(1.1);
+  }
+  
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 0.3rem;
+  }
+  
+  .hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    transition: transform 0.3s;
+  }
+
+  
+  /* Responsive Styles */
+  @media screen and (max-width: 768px) {
+    .nav-links {
+      display: none; 
+      flex-direction: column;
+      position: fixed; /* Fixed positioning */
+      top: 50px;
+      right: 0; 
+      background-color: #1D4ED8;
+      width: 250px; /* Or your preferred width */
+      height: calc(50vh - 60px); /* Occupy available height */
+      padding: 1rem;
+      z-index: 10;
+      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2); /* Add a shadow */
+      transform: translateX(100%); /* Initially off-screen to the right */
+      transition: transform 0.3s ease-in-out; /* Smooth transition */
+    }
+  
+    .nav-links.show {
+      display: flex;
+      transform: translateX(0);
+    }
+  
+    .nav-links li {
+      margin: 1rem 0;
+        text-align: left; /* Align text to the left within the box */
+        padding-left: 1rem;
+    }
+  
+    .hamburger {
+      display: block;
+    }
+  
+    .container {
+      position: relative;
+    }
+  }  
