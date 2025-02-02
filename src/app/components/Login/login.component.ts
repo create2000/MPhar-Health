@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatErrorModule } from '@angular/material/error';
+import { MatError } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Import for forms
 import { CommonModule } from '@angular/common'; // Import for *ngIf
 
@@ -20,7 +20,7 @@ import { CommonModule } from '@angular/common'; // Import for *ngIf
     MatInputModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    MatErrorModule,
+    MatError,
     FormsModule, // Add FormsModule
     ReactiveFormsModule, // Add ReactiveFormsModule
     CommonModule // Add CommonModule
