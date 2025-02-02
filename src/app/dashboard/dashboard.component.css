@@ -1,0 +1,154 @@
+/* dashboard.component.css */
+
+/* General reset and layout */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    padding: 10px 20px;
+    color: white;
+}
+
+.navbar-brand h3 {
+    margin: 0;
+}
+
+.navbar-nav {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-item {
+    cursor: pointer;
+}
+
+.nav-item button {
+    background-color: #28a745;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.nav-item button:hover {
+    background-color: #218838;
+}
+
+/* Health Issue Form Styles */
+.health-issue-form {
+    margin-top: 30px;
+    animation: slideInFromTop 0.5s ease-out forwards; /* Slide-in effect */
+    background: linear-gradient(135deg, #6a11cb, #2575fc); /* Gradient background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 30px auto;
+    color: white;
+}
+
+@keyframes slideInFromTop {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: white;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    font-size: 16px;
+    margin-top: 5px;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.form-group ::placeholder {
+    color: gray;
+    font-style: italic;
+}
+
+/* Optional custom styling for file input */
+.form-group input[type="file"] {
+    padding: 3px;
+}
+
+/* Button Styles */
+button[mat-raised-button] {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button[mat-raised-button]:hover {
+    background-color: #218838;
+}
+
+button[mat-raised-button]:disabled {
+    background-color: #aaa;
+}
+
+/* Error Messages */
+.error {
+    color: red;
+    font-size: 12px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .health-issue-form {
+        width: 90%;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        box-shadow: none;
+    }
+}

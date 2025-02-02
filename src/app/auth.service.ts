@@ -1,80 +1,117 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, tap, map, catchError, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private isLoggedInSubject = new BehaviorSubject<boolean>(false); // Initial state
+  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
   public isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
   private userNameSubject = new BehaviorSubject<string | null>(null);
   public userName$: Observable<string | null> = this.userNameSubject.asObservable();
 
-  constructor(private http: HttpClient) {
-    // Check for token on app startup
-    const token = localStorage.getItem('token');
-    if (token && this.isValidToken(token)) { // ✅ Ensure token is valid
+  private apiUrl = 'http://localhost:5256/api'; // Or your API URL
+
+  constructor(private http: HttpClient, private router: Router) {
+    const token = localStorage.getItem('token') || localStorage.getItem('admin_token') || localStorage.getItem('health_professional_token'); // Check for all tokens
+    if (token && this.isValidToken(token)) {
       this.setLoggedInStatus(true);
       this.setUserName();
+      this.setUserRole();
     }
-  } // ✅ Closing brace for the constructor
-
-  // ✅ Moved outside the constructor
-  private isValidToken(token: string): boolean {
-    const decoded = this.decodeToken(token);
-    return !!decoded;
-  }
-
-  // Create a public method to update login status
-  setLoggedInStatus(status: boolean) {
-    this.isLoggedInSubject.next(status);
   }
 
   login(credentials: any): Observable<any> {
     const headers = { 'Content-Type': 'application/json' };
-    return this.http.post('http://localhost:5256/api/auth/login', JSON.stringify(credentials), { headers }).pipe(
+    return this.http.post(`${this.apiUrl}/auth/login`, JSON.stringify(credentials), { headers }).pipe(
       tap((response: any) => {
-        localStorage.setItem('token', response.token);
-        this.setLoggedInStatus(true); // Use the public method to set logged-in status
-        this.setUserName(); // Set the user's name
+        console.log('Login successful, response:', response);
+        localStorage.setItem('token', response.token); // Or localStorage.setItem('health_professional_token', response.token); if you have separate tokens
+        this.setLoggedInStatus(true);
+        this.setUserName();
+        this.setUserRole();
+
+        setTimeout(() => {
+          const userRole = this.getUserRole();
+          console.log('User role after login (with delay):', userRole);
+          this.redirectUser(userRole);
+        }, 0);
+      }),
+      catchError((error) => {
+        console.error("Login error:", error);
+        return of(null);
       })
     );
   }
 
-  logout() {
-    localStorage.removeItem('token');
-    this.setLoggedInStatus(false); // Use the public method to set logged-out status
-    this.userNameSubject.next(null);
+  // ... (loginAdmin method - no changes needed)
+
+  private isValidToken(token: string): boolean {
+    return !!this.decodeToken(token);
   }
 
-  isLoggedIn(): boolean {
-    return this.isLoggedInSubject.value;
+  setLoggedInStatus(status: boolean) {
+    this.isLoggedInSubject.next(status);
   }
 
   setUserName() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || localStorage.getItem('admin_token') || localStorage.getItem('health_professional_token'); // Check all tokens
     if (token) {
-      // Decode the token
       const decodedToken: any = this.decodeToken(token);
-      console.log("Decoded Token:", decodedToken); // 🔍 Debugging log
-  
       const fullName = decodedToken?.fullname || 'User';
-      console.log("Extracted fullname:", fullName); // 🔍 Debugging log
-  
-      this.userNameSubject.next(fullName); // Update UI
-    } else {
-      console.log("No token found in localStorage.");
+      this.userNameSubject.next(fullName);
     }
   }
-  
-  
 
   decodeToken(token: string) {
     try {
       return JSON.parse(atob(token.split('.')[1]));
     } catch (e) {
       return null;
+    }
+  }
+
+  private setUserRole() {
+    const token = localStorage.getItem('token') || localStorage.getItem('admin_token') || localStorage.getItem('health_professional_token'); // Check all tokens
+    if (token) {
+      const decodedToken: any = this.decodeToken(token);
+
+      console.log("Decoded Token Claims (inside setUserRole):", decodedToken);
+
+      const role = decodedToken?.["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || decodedToken?.role || decodedToken?.Role || 'User'; // Check all possible keys
+      console.log('Setting user role:', role);
+      localStorage.setItem('userRole', role);
+    }
+  }
+
+  getUserRole(): string | null {
+    const token = localStorage.getItem('token') || localStorage.getItem('admin_token') || localStorage.getItem('health_professional_token'); // Check all tokens
+    if (token) {
+      const decodedToken: any = this.decodeToken(token);
+      return decodedToken?.["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || decodedToken?.role || decodedToken?.Role || null; // Check all possible keys, return null if no role is found
+    }
+    return null; // Return null if no token
+  }
+
+  // ... (isAdmin, isAuthenticated, getUserName, getUser, logout - no changes)
+
+  public redirectUser(userRole: string | null) { // Make redirectUser public
+    console.log("Redirecting user with role:", userRole);
+    switch (userRole) {
+      case 'Admin':
+        this.router.navigate(['/admin-dashboard']);
+        break;
+      case 'Health Professional': // Correct case for Health Professional
+        this.router.navigate(['/health-dashboard']);
+        break;
+      case 'User':
+        this.router.navigate(['/Home']);
+        break;
+      default:
+        this.router.navigate(['/login']);
+        break;
     }
   }
 }

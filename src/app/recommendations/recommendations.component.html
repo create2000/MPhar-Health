@@ -1,0 +1,18 @@
+<div *ngIf="recommendations.length > 0; else noRecommendations">
+    <h2>Your Recommendations</h2>
+    <ul>
+      <li *ngFor="let recommendation of recommendations">
+        <span>{{ recommendation.text }}</span>
+        <input
+          type="checkbox"
+          [checked]="recommendation.completed"
+          (change)="updateRecommendationStatus(recommendation)"
+        />
+      </li>
+    </ul>
+  </div>
+  
+  <ng-template #noRecommendations>
+    <p>No recommendations available.</p>
+  </ng-template>
+  

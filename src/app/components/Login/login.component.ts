@@ -1,27 +1,45 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../../auth.service'
+import { AuthService } from '../../auth.service';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatErrorModule } from '@angular/material/error';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Import for forms
+import { CommonModule } from '@angular/common'; // Import for *ngIf
 
 @Component({
   selector: 'app-login',
+  standalone: true,
+  imports: [
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatErrorModule,
+    FormsModule, // Add FormsModule
+    ReactiveFormsModule, // Add ReactiveFormsModule
+    CommonModule // Add CommonModule
+  ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
-  standalone: false,
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  isLoading = false; // Loading state for the login button
+  isLoading = false;
+  errorMessage = '';
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private http: HttpClient,
-    private authService: AuthService // Inject AuthService
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required], 
+      username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
@@ -29,37 +47,28 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.isLoading = true; // Start loading
+      this.isLoading = true;
+      this.errorMessage = '';
 
-      // Modify the login payload to include a "username" field
       const loginPayload = {
-        username: "", // Since username is optional, send an empty string
+        username: this.loginForm.value.username,
         email: this.loginForm.value.email,
         password: this.loginForm.value.password
       };
 
       console.log('Sending login request with:', loginPayload);
-      
-      this.authService.login(loginPayload).subscribe({
-        next: (response: any) => {
-          console.log('Login response:', response);
 
-          if (response?.token) {
-            localStorage.setItem('token', response.token); 
-            this.authService.setLoggedInStatus(true); 
-            this.authService.setUserName(); 
-            this.router.navigate(['/dashboard']);
-          } else {
-            console.error('Token is missing in the response');
-            alert('Login failed! Please check your credentials and try again.');
-          }
+      this.authService.login(loginPayload).subscribe({
+        next: () => {
+          const role = this.authService.getUserRole();
+          this.authService.redirectUser(role); // Call redirectUser from AuthService
         },
         error: (err) => {
-          console.error('Login error:', err); // Log the error for debugging
-          alert(`Login failed! ${err.error?.message || 'Invalid credentials'}`);
+          this.errorMessage = `Login failed! ${err.error?.message || 'Invalid credentials'}`;
+          console.error('Login error:', err);
         },
         complete: () => {
-          this.isLoading = false; // Stop loading
+          this.isLoading = false;
         }
       });
     }
