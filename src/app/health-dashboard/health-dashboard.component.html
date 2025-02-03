@@ -1,0 +1,28 @@
+<p>health-dashboard works!</p>
+
+<h2>Assigned Health Issues</h2>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Patient</th>
+      <th>Description</th>
+      <th>Recommendation</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let healthIssue of healthIssues">
+      <td>{{ healthIssue.id }}</td>
+      <td>{{ healthIssue.patient?.email }}</td>
+      <td>{{ healthIssue.description }}</td>
+      <td>{{ healthIssue.recommendation }}</td>
+      <td>
+        <textarea [(ngModel)]="recommendationText[healthIssue.id]"></textarea>
+        <button (click)="addRecommendation(healthIssue.id)">Add Recommendation</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<button (click)="logout()">Logout</button>

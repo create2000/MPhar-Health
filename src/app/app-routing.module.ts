@@ -1,23 +1,21 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/Login/login.component';
 import { HomeComponent } from './components/Home/home.component';
 import { RecommendationComponent } from './components/recommendation/recommendation.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SignupComponent } from './signup/signup.component';
-import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { HealthDashboardComponent } from './health-dashboard/health-dashboard.component';
 import { AuthGuard } from './auth/auth.guard';
-import { HealthProfessionalDashboardComponent } from './health-professional-dashboard/health-professional-dashboard.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'Home', pathMatch: 'full' },
+  { path: '', redirectTo: 'Home', pathMatch: 'full' }, // Default route
   { path: 'Login', component: LoginComponent },
   { path: 'Home', component: HomeComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'admin-login', component: AdminLoginComponent },
   { path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard] },
-  { path: 'health-dashboard', component: HealthProfessionalDashboardComponent, canActivate: [AuthGuard] }, // Health Professional route
+  { path: 'health-dashboard', component: HealthDashboardComponent, canActivate: [AuthGuard]},
   { path: 'recommendation', component: RecommendationComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: '**', redirectTo: 'Home' }, // Wildcard route
@@ -25,6 +23,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

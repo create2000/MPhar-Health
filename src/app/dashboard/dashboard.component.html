@@ -1,51 +1,58 @@
-<!-- dashboard.component.html -->
 <div *ngIf="isLoggedIn">
-    <!-- Navbar -->
-    <nav class="navbar">
-      <div class="navbar-brand">
-        <h3>Welcome, {{ userName }}!</h3>
-      </div>
-      <ul class="navbar-nav">
-        <li class="nav-item" (click)="toggleForm()">
-          <button class="btn btn-primary">Submit Health Issue</button>
-        </li>
-      </ul>
-    </nav>
-  
-    <!-- Health Issue Submission Form -->
-    <div *ngIf="formVisible" class="health-issue-form">
-      <form [formGroup]="healthIssueForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="title">Title</label>
-          <input id="title" matInput formControlName="title" required placeholder="e.g Malaria, Pneumonia, Sore throat" />
-          <div class="error" *ngIf="healthIssueForm.controls['title'].hasError('required')">
-            Title is required
-          </div>
-        </div>
-  
-        <div class="form-group">
-          <label for="description">Description</label>
-          <textarea id="description" matInput formControlName="description" required placeholder="Describe the health issue"></textarea>
-          <div class="error" *ngIf="healthIssueForm.controls['description'].hasError('required')">
-            Description is required
-          </div>
-        </div>
-  
-         
-
-        <button mat-raised-button color="primary" type="submit" [disabled]="healthIssueForm.invalid">
-          Submit Health Issue
-        </button>
-      </form>
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <h3>Welcome, {{ userName }}!</h3>
     </div>
+    <ul class="navbar-nav">
+      <li class="nav-item" (click)="toggleForm()">
+        <button class="btn btn-primary">Submit Health Issue</button>
+      </li>
+    </ul>
+  </nav>
+
+  <div *ngIf="formVisible" class="health-issue-form">
+    <form [formGroup]="healthIssueForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input id="title" matInput formControlName="title" required placeholder="e.g Malaria, Pneumonia, Sore throat" />
+        <div class="error" *ngIf="healthIssueForm.controls['title'].hasError('required')">
+          Title is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" matInput formControlName="description" required placeholder="Describe the health issue"></textarea>
+        <div class="error" *ngIf="healthIssueForm.controls['description'].hasError('required')">
+          Description is required
+        </div>
+      </div>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="healthIssueForm.invalid">
+        Submit Health Issue
+      </button>
+    </form>
   </div>
 
-  <div *ngIf="recommendation">
-    <h3>Check Recommendation</h3>
-    <p>{{ recommendation }}</p>
-  </div>
-  
-  <div *ngIf="!isLoggedIn">
-    <p>Please login to view your dashboard</p>
-  </div>
-  
+  <h2>My Health Issues</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Description</th>
+        <th>Recommendation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let healthIssue of healthIssues">
+        <td>{{ healthIssue.id }}</td>
+        <td>{{ healthIssue.description }}</td>
+        <td>{{ healthIssue.recommendation }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="!isLoggedIn">
+  <p>Please login to view your dashboard</p>
+</div>

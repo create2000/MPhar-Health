@@ -1,12 +1,33 @@
 <div class="admin-dashboard">
-    <h2>Welcome, Admin</h2>
-    <p>Logged in as: {{ userName }}</p>
-  
-    <!-- Add other dashboard details like management panels, statistics, etc. -->
-  
-    <div class="dashboard-content">
-      <h3>Dashboard Content Goes Here</h3>
-      <!-- More content related to the admin's tasks -->
-    </div>
+  <h2>Welcome, Admin</h2>
+  <p>Logged in as: {{ userName }}</p>
+
+  <div class="dashboard-content">
+      <h3>Health Issues</h3>
+      <table>
+          <thead>
+              <tr>
+                  <th>ID</th>
+                  <th>Patient</th>
+                  <th>Description</th>
+                  <th>Assigned Health Professional</th>
+                  <th>Actions</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let healthIssue of healthIssues$ | async">  <td>{{ healthIssue.id }}</td>
+                  <td>{{ healthIssue.patient?.email }}</td>
+                  <td>{{ healthIssue.description }}</td>
+                  <td>
+                      <select [(ngModel)]="selectedHealthProfessional[healthIssue.id]">
+                          <option [ngValue]="null">Select</option>
+                          <option *ngFor="let hp of healthProfessionals$ | async" [ngValue]="hp.id">  {{ hp.name }}
+                          </option>
+                      </select>
+                  </td>
+                  <td><button (click)="assignHealthIssue(healthIssue.id)">Assign</button></td>
+              </tr>
+          </tbody>
+      </table>
   </div>
-  
+</div>

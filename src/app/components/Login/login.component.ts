@@ -1,76 +1,63 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../auth.service';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatError } from '@angular/material/form-field';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Import for forms
-import { CommonModule } from '@angular/common'; // Import for *ngIf
+import { AuthService } from '../../auth.service'; // Adjust the import path if needed
+import { Observable } from 'rxjs'; // Import Observable
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatProgressSpinnerModule,
-    MatError,
-    FormsModule, // Add FormsModule
-    ReactiveFormsModule, // Add ReactiveFormsModule
-    CommonModule // Add CommonModule
-  ],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    standalone: false,
+    styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  loginForm: FormGroup;
-  isLoading = false;
-  errorMessage = '';
+    loginForm!: FormGroup; // Use definite assignment assertion (!)
+    isLoading = false;
+    errorMessage = '';
+    isAdminLogin = false; // Flag for admin login
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private authService: AuthService
-  ) {
-    this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
-    });
-  }
-
-  onSubmit() {
-    if (this.loginForm.valid) {
-      this.isLoading = true;
-      this.errorMessage = '';
-
-      const loginPayload = {
-        username: this.loginForm.value.username,
-        email: this.loginForm.value.email,
-        password: this.loginForm.value.password
-      };
-
-      console.log('Sending login request with:', loginPayload);
-
-      this.authService.login(loginPayload).subscribe({
-        next: () => {
-          const role = this.authService.getUserRole();
-          this.authService.redirectUser(role); // Call redirectUser from AuthService
-        },
-        error: (err) => {
-          this.errorMessage = `Login failed! ${err.error?.message || 'Invalid credentials'}`;
-          console.error('Login error:', err);
-        },
-        complete: () => {
-          this.isLoading = false;
-        }
-      });
+    constructor(
+        private fb: FormBuilder,
+        private router: Router,
+        private authService: AuthService
+    ) {
+        this.loginForm = this.fb.group({
+            username: ['', Validators.required],
+            email: ['', [Validators.required, Validators.email]],
+            password: ['', Validators.required]
+        });
     }
-  }
+
+    onSubmit() {
+        if (this.loginForm.valid) {
+            this.isLoading = true;
+            this.errorMessage = '';
+
+            const loginPayload = this.loginForm.value; // Use directly
+
+            console.log('Sending login request with:', loginPayload);
+
+            let authObservable: Observable<any>; // Type the variable
+
+            if (this.isAdminLogin) {
+                authObservable = this.authService.loginAdmin(loginPayload);
+            } else {
+                authObservable = this.authService.login(loginPayload);
+            }
+
+            authObservable.subscribe({  // Subscribe to the correct observable
+                next: (response) => { // Add response parameter
+                    console.log("Login Response:", response); // Log the response
+                    this.authService.redirectUser();
+                },
+                error: (err) => {
+                    this.errorMessage = `Login failed! ${err.error?.message || 'Invalid credentials'}`;
+                    console.error('Login error:', err);
+                },
+                complete: () => {
+                    this.isLoading = false;
+                }
+            });
+        }
+    }
 }

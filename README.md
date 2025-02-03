@@ -1,63 +1,94 @@
-<<<<<<< HEAD
-# HealthcareApp
+# Frontend Documentation
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.3.
+## Project Overview
+This is the frontend of the Healthcare App, built using Angular. The application allows patients to submit health issues, which are reviewed by an admin. The admin assigns the issue to a health professional, who provides a recommendation that is sent back to the patient.
 
-## Development server
+## Getting Started
+Follow these steps to set up and run the project on your local machine.
 
-To start a local development server, run:
+### Prerequisites
+Ensure you have the following installed:
+- [Node.js](https://nodejs.org/) (Latest LTS recommended)
+- [Angular CLI](https://angular.io/cli)
+- [Git](https://git-scm.com/)
 
-```bash
-ng serve
+### Installation Steps
+1. **Clone the repository**
+   ```sh
+   git clone <repository-url>
+   ```
+2. **Navigate to the project directory**
+   ```sh
+   cd healthcare-frontend
+   ```
+3. **Install dependencies**
+   ```sh
+   npm install
+   ```
+4. **Configure environment variables**
+   - Create an `environment.ts` file inside `src/environments/`
+   - Define the API base URL and other necessary configurations
+   ```ts
+   export const environment = {
+     production: false,
+     apiBaseUrl: 'http://localhost:5000/api'
+   };
+   ```
+5. **Run the application**
+   ```sh
+   ng serve --open
+   ```
+   The application should open automatically in your default browser at `http://localhost:4200/`.
+
+## Project Structure
+```
+healthcare-frontend/
+│-- src/
+│   │-- app/
+│   │   │-- components/   # Reusable UI components
+│   │   │-- services/     # API calls and data handling
+│   │   │-- pages/        # Application pages (Dashboard, Login, etc.)
+│   │   │-- app.module.ts # Main module
+│   │-- environments/
+│   │   │-- environment.ts # Environment configuration
+│   │-- main.ts           # Application entry point
+│   │-- index.html        # Main HTML file
+│-- angular.json         # Angular configuration
+│-- package.json         # Dependencies and scripts
+│-- README.md            # Project documentation
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Application Flow
+### 1. User Authentication
+- A new user (patient) signs up.
+- The user logs in and gets authenticated.
 
-## Code scaffolding
+### 2. Submitting a Health Issue
+- Once logged in, the patient submits a health issue via a form.
+- The data is sent to the backend via an API request.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### 3. Admin Dashboard
+- Admin users can log in and view submitted health issues.
+- Each health issue is listed with details.
+- The admin assigns the issue to a health professional.
 
-```bash
-ng generate component component-name
-```
+### 4. Health Professional Dashboard
+- The assigned health professional views the issue.
+- The professional provides a recommendation.
+- The recommendation is submitted back to the patient.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### 5. Patient Receives Recommendation
+- The patient can view the response from the health professional.
+- The process is complete once the patient receives the recommendation.
 
-```bash
-ng generate --help
-```
+## Data Display Issue Explanation
+Currently, the application does not correctly display the health issues on the admin and health professional dashboards due to potential API response issues or incorrect state management. To resolve this:
+1. **Verify API Calls:** Ensure the frontend correctly fetches assigned issues from the backend.
+2. **Check State Management:** Use Angular services or state management libraries like NgRx to store and update assigned health issues.
+3. **Inspect Backend API Responses:** Debug the backend API to confirm correct data is being sent.
 
-## Building
+## Conclusion
+This frontend integrates with the backend to manage patient health issues efficiently. If you encounter any issues, ensure the API is running correctly and check network requests in the browser console.
 
-To build the project run:
+For further improvements, consider implementing a global state management solution and refining API error handling for better debugging and reliability.
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-=======
-# MPhar-Health
->>>>>>> 1c5c02092faa01c0b51b7f9db4322da7dc73984d

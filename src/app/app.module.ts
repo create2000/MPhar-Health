@@ -11,11 +11,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/Login/login.component';
 import { HomeComponent } from './components/Home/home.component';
-import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { PatientListComponent } from './components/patient-list/patient-list.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { SymptomReportComponent } from './symptom-report/symptom-report.component';
-import { HealthProfessionalDashboardComponent } from './health-professional-dashboard/health-professional-dashboard.component';
+import { HealthDashboardComponent } from './health-dashboard/health-dashboard.component';
 import { RecommendationsComponent } from './recommendations/recommendations.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RecommendationComponent } from './components/recommendation/recommendation.component';
@@ -41,10 +40,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     PatientListComponent,
     RecommendationComponent,
     SymptomReportComponent,
-    HealthProfessionalDashboardComponent,
+    HealthDashboardComponent,
     RecommendationsComponent,
     AdminDashboardComponent,
-    AdminLoginComponent
+
 
   ],
   imports: [
@@ -60,7 +59,6 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     MatInputModule,
     MatTableModule,
     MatToolbarModule,
-    AppRoutingModule,
     MatProgressSpinnerModule,
     MatCheckboxModule,
     MatOptionModule,
